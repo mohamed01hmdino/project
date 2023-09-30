@@ -12,6 +12,12 @@
   <div class="container">
     <h2>Register</h2>
     <form id="registerForm" action="handler/Handleregister.php" method="post">
+    <?php
+  if (isset($_SESSION['error_message'])) {
+    echo '<div class="error-message">' . $_SESSION['error_message'] . '</div>';
+    unset($_SESSION['error_message']); // Clear the error message after displaying
+  }
+?>
       <input type="text" name="username" placeholder="Username" required><br>
       <input type="password" name="password" placeholder="Password" required><br>
       <input type="password" name="confirmPassword" placeholder="Confirm Password" required><br>
