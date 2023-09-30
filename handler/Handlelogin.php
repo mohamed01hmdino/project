@@ -1,25 +1,10 @@
 <?php 
 include('../core/validation.php');
 include('db.php');
-
+session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = sanitizeInput($_POST['username']);
     $password = $_POST['password'];
-
- // Validate username
- if (!requiredVal($username)) {
-    header('Location: ../login.php');
-    exit;
-} elseif (!maxVal($username, 30)) { 
-    header('Location: ../login.php');
-    exit;
-}
-
-// Validate password 
-if (!minVal($password,8)) {
-    header('Location: ../login.php');
-    exit;
-}
 
     $stmt = $conn->prepare("SELECT id, username, password ,email FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
@@ -35,7 +20,8 @@ if (!minVal($password,8)) {
 
         header('Location: ../welcome.php');
     } else {
-        echo "Invalid login credentials.";
+        $_SESSION['error_login'] = 'Invalid login credentials.';
+        header("location:../login.php");
     }
 
     $stmt->close();
