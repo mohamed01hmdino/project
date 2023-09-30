@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<?php  session_start(); ?>
+<?php  session_start();
+if (isset($_SESSION['user_id'])) {
+  header('Location: welcome.php');
+  exit;
+}
+ ?>
 <?php include 'inc/footer.php' ; ?>
 <?php include 'inc/header.php' ; ?>
 <?php include 'inc/nav.php' ; ?>
